@@ -1,0 +1,25 @@
+import yfinance as yf
+import numpy as np
+
+tickers=['amzn','tsla']
+data= yf.download(tickers,start='2018-01-01',end='2020-12-30')['Adj Close']
+print(data)
+
+sec_logreturn=np.log(data/data.shift(1))
+#find relation ship between 2 Stocks using Covariance
+#finding variance
+var_secrt=sec_logreturn['AMZN'].var()*250
+var_secrt2=sec_logreturn['TSLA'].var()*250
+print('Variance of AMZN=',var_secrt)
+print('Variance of TSLA=',var_secrt2)
+#finding Covariance
+#'\n' = move text to next line
+cov_matrix=sec_logreturn.cov()
+print ('Covariance Matrix','\n',cov_matrix)
+#finding Correlation
+corr_matrix=sec_logreturn.corr()
+print ('Correlation Matrix','\n',corr_matrix,'\n'
+       'Analysis: As you can see the correlation between Amazon and Tesla'
+       'reflect the dependence of  one another by showing correlation equal 1'
+       'by the way this can not assume that it significantly relate to each other'
+       'the result just show that the return of both company moving in the same direction' )
